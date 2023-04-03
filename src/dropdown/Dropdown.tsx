@@ -21,6 +21,26 @@ const Dropdown: FC<DropdownDataType> = ({
   }
 
   useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      const clickedItem = event.target as HTMLElement;
+      const isDropdownItemClicked = clickedItem.classList.contains('dropdown-menu-item');
+      if (
+        !isDropdownItemClicked &&
+        dropdownRef.current &&
+        !dropdownRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+        setSearchTerm('');
+      }
+    }
+
+    document.addEventListener('click', handleClickOutside);
+    return () => {
+      document.removeEventListener('click', handleClickOutside);
+    }
+  });
+
+  useEffect(() => {
     searchTerm && setIsOpen(true);
   }, [searchTerm]);
 
