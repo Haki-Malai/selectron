@@ -1,11 +1,58 @@
+$mainBackgroundColor: #fff;
+$mainTextColor: #000;
+$mainDarkBlueColor: #122e3c;
+$placeholderColor: #999;
+$inputHeight: 40px;
+$inputWidth: 300px;
+$paddingXAxis: 10px;
+$listItemsCount: 4;
+
+@mixin mainBoxStyle {
+  border-radius: 10px;
+  background-color: $mainBackgroundColor;
+  color: $mainDarkBlueColor;
+}
+
 .dropdown {
   position: relative;
+  width: $inputWidth;
+
+  &-toggle {
+    position: relative;
+
+    input {
+      all: unset;
+      width: 100%;
+      height: $inputHeight;
+      text-indent: $paddingXAxis;
+      padding-top: 10px;
+      @include mainBoxStyle;
+    }
+  }
 
   &-menu {
+    max-height: calc(#{$listItemsCount * $inputHeight});
+    width: 100%;
     visibility: hidden;
+    padding: 0;
+    overflow: auto;
+    @include mainBoxStyle;
 
     &.active {
       visibility: visible;
+    }
+
+    &-item {
+      padding: 0 $paddingXAxis;
+      height: $inputHeight;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover, &.selected {
+        background-color: $mainDarkBlueColor;
+        color: white;
+      }
     }
   }
 }

@@ -26,6 +26,7 @@ const Dropdown: FC<DropdownDataType> = ({
   return (
     <div className='dropdown'>
       <div
+        className={`dropdown-toggle`}
         ref={dropdownRef}
         onClick={handleOpenDropdown}>
         <input
@@ -38,13 +39,13 @@ const Dropdown: FC<DropdownDataType> = ({
       <ul className={`dropdown-menu ${isOpen? 'active' : ''}`}>
         {searchTerm ?
           searched.map((option: any) => (
-            <li key={option.value}>
+            <li className={'dropdown-menu-item'} key={option.value}>
               {option.title}
             </li>
           ))
           :
           data.map((option: any) => (
-            <li key={option.value}>
+            <li className={'dropdown-menu-item'} key={option.value}>
               {option.title}
             </li>
           ))
