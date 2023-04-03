@@ -19,6 +19,7 @@ const Dropdown: FC<DropdownDataType> = ({
   const [errorState, setErrorState] = useState<boolean>(error)
   const [selectedOptions, setSelectedOptions] = useState<DropdownItemDataType[] | []>([]);
   const [filteredOptions, setFilteredOptions] = useState<DropdownItemDataType[] | []>(data);
+  const [options, setOptions] = useState<DropdownItemDataType[] | []>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const searched = data.filter((option: any) =>
@@ -72,12 +73,17 @@ const Dropdown: FC<DropdownDataType> = ({
   }, [searchTerm]);
 
   useEffect(() => {
-    if (!error) {
+    if (testError) {
       setErrorState(true);
       setIsOpen(false);
       setSelectedOptions([]);
+      setOptions(data);
     }
   }, [testError]);
+
+  useEffect(() => {
+    setOptions(searchTerm ? searched : filteredOptions);
+  }, [searchTerm, filteredOptions]);
 
   return (
     <div className='dropdown'>
@@ -113,26 +119,13 @@ const Dropdown: FC<DropdownDataType> = ({
         )}
       </div>
       <ul className={`dropdown-menu ${isOpen? 'active' : ''}`}>
-        {searchTerm ?
-          searched[0] ?
-            searched.map((option) => (
-              <li key={option.value} className={`dropdown-menu-item`}
-                onClick={() => handleOptionSelect(option)}>
-                {option.title}
-              </li>
-            ))
-            :
-            <NoDataComponent/>
-          :
-          filteredOptions[0] ?
-            filteredOptions.map((option) => (
-              <li key={option.value} className={`dropdown-menu-item`}
-                onClick={() => handleOptionSelect(option)}>
-                {option.title}
-              </li>
-            ))
-            :
-            <NoDataComponent/>
+        {options.length
+          ? options.map(option => (
+            <li key={option.value} className="dropdown-menu-item" onClick={() => handleOptionSelect(option)}>
+              {option.title}
+            </li>
+          ))
+          : <NoDataComponent />
         }
       </ul>
     </div>

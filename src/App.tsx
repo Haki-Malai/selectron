@@ -20,6 +20,7 @@ const App: FC = () => {
   ];
   const [error, setError] = useState<boolean>(false);
 
+  // Used to get the selected items from the dropdown
   const handleDropdownChange = (name: string, selectedItems: DropdownItemDataType[]) => {
     const resultObj = {
       [name]: selectedItems
