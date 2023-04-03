@@ -34,6 +34,12 @@ $listItemsCount: 4;
       display: flex;
       top: 50%;
       right: $paddingXAxis;
+      pointer-events: none;
+      transform: translateY(-50%);
+
+      &.active {
+        transform: translateY(-50%) rotateX(180deg);
+      }
 
       svg {
         width: 15px;
