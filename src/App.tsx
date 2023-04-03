@@ -1,9 +1,13 @@
-import React from 'react';
+import React, { FC } from 'react';
 import Dropdown from './dropdown';
 
+interface CarType {
+  title: string;
+  value: string;
+}
 
-function App() {
-  const cars = [
+const App: FC = () => {
+  const cars: CarType[] = [
     {title: "Toyota", value: "toyota"},
     {title: "Honda", value: "honda"},
     {title: "Ford", value: "ford"},
@@ -16,7 +20,7 @@ function App() {
 
   return (
     <div>
-        <Dropdown items={cars} />
+      <Dropdown data={cars} placeholder='Cars' name='cars_dropdown' />
     </div>
   );
 }

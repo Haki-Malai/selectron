@@ -1,18 +1,23 @@
-import React, {FC, useState} from 'react';
+import React, { FC } from 'react';
+import { DropdownDataType } from './Dropdown.types';
 
-interface DropdownProps {
-  items: { title: string }[];
-}
-
-const Dropdown: FC<DropdownProps> = ({items}) => {
-  const [active, setActive] = useState(false);
+const Dropdown: FC<DropdownDataType> = ({
+  data,
+  placeholder,
+  name
+}) => {
 
   return (
     <div>
+      <label>{placeholder}</label>
       <ul>
-        {items.map((item, index) => (
-          <li key={index}>{item.title}</li>
-        ))}
+        {data.map(({ title }, index: number) => {
+          return (
+            <li key={index}>
+              <button onClick={() => console.log('Clicked:', title)}>{title}</button>
+            </li>
+          );
+        })}
       </ul>
     </div>
   );
