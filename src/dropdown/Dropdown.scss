@@ -134,6 +134,9 @@ $listItemsCount: 4;
   }
 
   &-menu {
+    position: absolute;
+    z-index: 1;
+    top: calc(#{$inputHeight} * 1.2);
     max-height: calc(#{$listItemsCount * $inputHeight});
     width: 100%;
     margin: 16px 0 0;

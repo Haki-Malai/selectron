@@ -1,6 +1,7 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
 import { DropdownDataType, DropdownItemDataType } from './Dropdown.types';
 import { ReactComponent as ArrowIcon } from './icons/arrowIcon.svg';
+import { ReactComponent as DeleteIcon } from './icons/deleteIcon.svg';
 import { removeItemsFromArrayByValue } from './Dropdown.utils';
 import NoDataComponent from './NoData.component';
 import './Dropdown.scss';
@@ -15,7 +16,7 @@ const Dropdown: FC<DropdownDataType> = ({
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [errorState, setErrorState] = useState<boolean>(error)
-  const [selectedOptions, setSelectedOption] = useState<DropdownItemDataType[] | []>([]);
+  const [selectedOptions, setSelectedOptions] = useState<DropdownItemDataType[] | []>([]);
   const [filteredOptions, setFilteredOptions] = useState<DropdownItemDataType[] | []>(data);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
@@ -29,13 +30,20 @@ const Dropdown: FC<DropdownDataType> = ({
 
   const handleOptionSelect = (option: DropdownItemDataType) => {
     const resultOptions = [...selectedOptions, option];
-    setSelectedOption(resultOptions);
+    setSelectedOptions(resultOptions);
     const filteredResultOptions = removeItemsFromArrayByValue(data, resultOptions);
     setFilteredOptions(filteredResultOptions);
     setIsOpen(false);
     setErrorState(false);
     onDropdownChange(name, resultOptions);
     setSearchTerm('');
+  }
+
+  const handleRemoveItemFromSelected = (itemToRemove: DropdownItemDataType) => {
+    const selectedResultOptions = selectedOptions.filter(item => item.value !== itemToRemove.value);
+    setSelectedOptions(selectedResultOptions);
+    setFilteredOptions([itemToRemove, ...filteredOptions])
+    onDropdownChange(name, selectedResultOptions);
   }
 
   useEffect(() => {
@@ -92,29 +100,34 @@ const Dropdown: FC<DropdownDataType> = ({
       </div>
       <div className={'dropdown-selected-items'}>
         {selectedOptions.map(option =>
-          <div key={option.value} className={`dropdown-selected-items-item`}>
+          <div key={option.value} className={`dropdown-selected-items-item`}
+            onClick={() => handleRemoveItemFromSelected(option)}>
             <span>{option.title}</span>
+            <DeleteIcon />
           </div>
         )}
       </div>
       <ul className={`dropdown-menu ${isOpen? 'active' : ''}`}>
         {searchTerm ?
           searched[0] ?
-            searched.map((option: any) => (
-              <li className={'dropdown-menu-item'} key={option.value}
+            searched.map((option) => (
+              <li key={option.value} className={`dropdown-menu-item`}
                 onClick={() => handleOptionSelect(option)}>
                 {option.title}
               </li>
             ))
             :
-            <NoDataComponent />
+            <NoDataComponent/>
           :
-          data.map((option: any) => (
-            <li className={'dropdown-menu-item'} key={option.value}
+          filteredOptions[0] ?
+            filteredOptions.map((option) => (
+              <li key={option.value} className={`dropdown-menu-item`}
                 onClick={() => handleOptionSelect(option)}>
-              {option.title}
-            </li>
-          ))
+                {option.title}
+              </li>
+            ))
+            :
+            <NoDataComponent/>
         }
       </ul>
     </div>
