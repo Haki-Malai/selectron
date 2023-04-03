@@ -1,6 +1,7 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
 import { DropdownDataType } from './Dropdown.types';
 import { ReactComponent as ArrowIcon } from './icons/arrowIcon.svg';
+import NoDataComponent from './NoData.component';
 import './Dropdown.scss';
 
 const Dropdown: FC<DropdownDataType> = ({
@@ -62,11 +63,14 @@ const Dropdown: FC<DropdownDataType> = ({
       </div>
       <ul className={`dropdown-menu ${isOpen? 'active' : ''}`}>
         {searchTerm ?
-          searched.map((option: any) => (
-            <li className={'dropdown-menu-item'} key={option.value}>
-              {option.title}
-            </li>
-          ))
+          searched[0] ?
+            searched.map((option: any) => (
+              <li className={'dropdown-menu-item'} key={option.value}>
+                {option.title}
+              </li>
+            ))
+            :
+            <NoDataComponent />
           :
           data.map((option: any) => (
             <li className={'dropdown-menu-item'} key={option.value}>

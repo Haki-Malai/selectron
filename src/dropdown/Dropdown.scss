@@ -87,5 +87,18 @@ $listItemsCount: 4;
         color: white;
       }
     }
+
+    .no-data {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 40px 20px;
+
+      svg {
+        width: 50px;
+        height: 50px;
+      }
+    }
   }
 }
