@@ -1,5 +1,6 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
 import { DropdownDataType } from './Dropdown.types';
+import { ReactComponent as ArrowIcon } from './icons/arrowIcon.svg';
 import './Dropdown.scss';
 
 const Dropdown: FC<DropdownDataType> = ({
@@ -35,6 +36,9 @@ const Dropdown: FC<DropdownDataType> = ({
           placeholder={placeholder}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        <span className={`dropdown-toggle-arrow ${isOpen? 'active': ''}`}>
+          <ArrowIcon />
+        </span>
       </div>
       <ul className={`dropdown-menu ${isOpen? 'active' : ''}`}>
         {searchTerm ?

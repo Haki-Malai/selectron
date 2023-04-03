@@ -28,6 +28,18 @@ $listItemsCount: 4;
       padding-top: 10px;
       @include mainBoxStyle;
     }
+
+    &-arrow {
+      position: absolute;
+      display: flex;
+      top: 50%;
+      right: $paddingXAxis;
+
+      svg {
+        width: 15px;
+        height: 20px;
+      }
+    }
   }
 
   &-menu {
