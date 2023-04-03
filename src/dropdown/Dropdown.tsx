@@ -1,6 +1,7 @@
 import React, { FC, useState, useRef, useEffect } from 'react';
-import { DropdownDataType } from './Dropdown.types';
+import { DropdownDataType, DropdownItemDataType } from './Dropdown.types';
 import { ReactComponent as ArrowIcon } from './icons/arrowIcon.svg';
+import { removeItemsFromArrayByValue } from './Dropdown.utils';
 import NoDataComponent from './NoData.component';
 import './Dropdown.scss';
 
@@ -8,11 +9,14 @@ const Dropdown: FC<DropdownDataType> = ({
   data,
   placeholder,
   error,
+  onDropdownChange,
   name
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
   const [errorState, setErrorState] = useState<boolean>(error)
+  const [selectedOptions, setSelectedOption] = useState<DropdownItemDataType[] | []>([]);
+  const [filteredOptions, setFilteredOptions] = useState<DropdownItemDataType[] | []>(data);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const searched = data.filter((option: any) =>
@@ -21,7 +25,17 @@ const Dropdown: FC<DropdownDataType> = ({
 
   const handleOpenDropdown = () => {
     setIsOpen(!isOpen);
-    if (isOpen) setErrorState(false);
+  }
+
+  const handleOptionSelect = (option: DropdownItemDataType) => {
+    const resultOptions = [...selectedOptions, option];
+    setSelectedOption(resultOptions);
+    const filteredResultOptions = removeItemsFromArrayByValue(data, resultOptions);
+    setFilteredOptions(filteredResultOptions);
+    setIsOpen(false);
+    setErrorState(false);
+    onDropdownChange(name, resultOptions);
+    setSearchTerm('');
   }
 
   useEffect(() => {
@@ -76,11 +90,19 @@ const Dropdown: FC<DropdownDataType> = ({
           <ArrowIcon />
         </span>
       </div>
+      <div className={'dropdown-selected-items'}>
+        {selectedOptions.map(option =>
+          <div key={option.value} className={`dropdown-selected-items-item`}>
+            <span>{option.title}</span>
+          </div>
+        )}
+      </div>
       <ul className={`dropdown-menu ${isOpen? 'active' : ''}`}>
         {searchTerm ?
           searched[0] ?
             searched.map((option: any) => (
-              <li className={'dropdown-menu-item'} key={option.value}>
+              <li className={'dropdown-menu-item'} key={option.value}
+                onClick={() => handleOptionSelect(option)}>
                 {option.title}
               </li>
             ))
@@ -88,7 +110,8 @@ const Dropdown: FC<DropdownDataType> = ({
             <NoDataComponent />
           :
           data.map((option: any) => (
-            <li className={'dropdown-menu-item'} key={option.value}>
+            <li className={'dropdown-menu-item'} key={option.value}
+                onClick={() => handleOptionSelect(option)}>
               {option.title}
             </li>
           ))

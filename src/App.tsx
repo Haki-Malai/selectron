@@ -1,5 +1,6 @@
 import React, { FC, useState } from 'react';
 import Dropdown from './dropdown';
+import { DropdownItemDataType } from './dropdown/Dropdown.types';
 
 interface CarType {
   title: string;
@@ -19,9 +20,20 @@ const App: FC = () => {
   ];
   const [error, setError] = useState<boolean>(false);
 
+  const handleDropdownChange = (name: string, selectedItems: DropdownItemDataType[]) => {
+    const resultObj = {
+      [name]: selectedItems
+    }
+  }
+
   return (
     <div>
-      <Dropdown data={cars} placeholder='Cars' error={error} name='cars_dropdown' />
+      <Dropdown
+        data={cars}
+        placeholder='Cars'
+        error={error}
+        onDropdownChange={handleDropdownChange}
+        name='cars_dropdown'/>
       <button onClick={() => setError(!error)}>Error Test</button>
     </div>
   );

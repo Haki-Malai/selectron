@@ -104,6 +104,35 @@ $listItemsCount: 4;
     }
   }
 
+  &-selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+
+    &-item {
+      font-size: 13px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      background-color: $mainDarkBlueColor;
+      color: white;
+      padding: 4px 7px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($mainDarkBlueColor, 5%);
+      }
+
+      svg {
+        margin-left: 5px;
+        width: 7px;
+        height: 7px;
+      }
+    }
+  }
+
   &-menu {
     max-height: calc(#{$listItemsCount * $inputHeight});
     width: 100%;
