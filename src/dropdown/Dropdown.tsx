@@ -1,16 +1,22 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { DropdownDataType } from './Dropdown.types';
+import './Dropdown.scss';
 
 const Dropdown: FC<DropdownDataType> = ({
   data,
   placeholder,
   name
 }) => {
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+
+  const handleOpenDropdown = () => {
+    setIsOpen(!isOpen);
+  }
 
   return (
-    <div>
-      <label>{placeholder}</label>
-      <ul>
+    <div className='dropdown'>
+      <button onClick={handleOpenDropdown}>{placeholder}</button>
+      <ul className={`dropdown-menu ${isOpen? 'active' : ''}`}>
         {data.map(({ title }, index: number) => {
           return (
             <li key={index}>
