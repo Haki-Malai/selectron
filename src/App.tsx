@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import Dropdown from './dropdown';
 
 interface CarType {
@@ -17,10 +17,12 @@ const App: FC = () => {
     {title: "Audi", value: "audi"},
     {title: "Tesla", value: "tesla"}
   ];
+  const [error, setError] = useState<boolean>(false);
 
   return (
     <div>
-      <Dropdown data={cars} placeholder='Cars' error={false} name='cars_dropdown' />
+      <Dropdown data={cars} placeholder='Cars' error={error} name='cars_dropdown' />
+      <button onClick={() => setError(!error)}>Error Test</button>
     </div>
   );
 }

@@ -21,11 +21,7 @@ const Dropdown: FC<DropdownDataType> = ({
 
   const handleOpenDropdown = () => {
     setIsOpen(!isOpen);
-    if(isOpen) setErrorState(false);
-  }
-
-  const handleErrorState = () => {
-    setErrorState(!searchTerm && !isOpen);
+    if (isOpen) setErrorState(false);
   }
 
   useEffect(() => {
@@ -53,8 +49,8 @@ const Dropdown: FC<DropdownDataType> = ({
   }, [searchTerm]);
 
   useEffect(() => {
-    handleErrorState();
-  }, [isOpen]);
+    if (!isOpen) setErrorState(error);
+  }, [error]);
 
   return (
     <div className='dropdown'>
@@ -73,6 +69,9 @@ const Dropdown: FC<DropdownDataType> = ({
             Required field
           </p>
         }
+        <p className={`label ${isOpen ? 'active' : ''}`}>
+          {placeholder}
+        </p>
         <span className={`dropdown-toggle-arrow ${isOpen? 'active': ''}`}>
           <ArrowIcon />
         </span>

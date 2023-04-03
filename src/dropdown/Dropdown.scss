@@ -13,6 +13,7 @@ $listItemsCount: 4;
   border-radius: 10px;
   background-color: $mainBackgroundColor;
   color: $mainDarkBlueColor;
+  box-shadow: 0 0 20px 0 rgba(12, 12, 12, 0.336);
 }
 
 .dropdown {
@@ -30,14 +31,36 @@ $listItemsCount: 4;
       height: $inputHeight;
       text-indent: $paddingXAxis;
       padding-top: 10px;
-      box-shadow: 0 0 10px 0 rgba(22, 22, 22, 0.15);
       @include mainBoxStyle;
 
       &::placeholder {
-        color: $placeholderColor;
+        color: transparent;
+      }
+
+      &:focus ~ .label {
+        transform: translateY(-130%) scale(0.7);
+        opacity: 0.6;
       }
     }
-    
+
+    .label {
+      pointer-events: none;
+      color: $mainDarkBlueColor;
+      position: absolute;
+      left: $paddingXAxis;
+      top: 50%;
+      transform: translateY(-50%);
+      transform-origin: left center;
+      margin: 0;
+      transition: transform 0.3s ease;
+      will-change: transform;
+
+      &.active {
+        transform: translateY(-130%) scale(0.7);
+        opacity: 0.6;
+      }
+    }
+
     &.empty-data {
       .error-label {
         position: absolute;
@@ -46,7 +69,7 @@ $listItemsCount: 4;
         left: $paddingXAxis;
       }
 
-      &::placeholder, .error-label {
+      .label, .error-label {
         color: $errorColor;
       }
 
@@ -57,7 +80,7 @@ $listItemsCount: 4;
       }
 
       input {
-        box-shadow: 0 0 10px 0 rgba($errorColor, 0.15);
+        box-shadow: 0 0 20px 0 rgba($errorColor, 0.3);
       }
     }
 
