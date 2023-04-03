@@ -1,4 +1,4 @@
-import React, { FC, useState } from 'react';
+import React, { FC, useState, useRef, useEffect } from 'react';
 import { DropdownDataType } from './Dropdown.types';
 import './Dropdown.scss';
 
@@ -8,22 +8,47 @@ const Dropdown: FC<DropdownDataType> = ({
   name
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [searchTerm, setSearchTerm] = useState<string>('');
+  const dropdownRef = useRef<HTMLDivElement>(null);
+
+  const searched = data.filter((option: any) =>
+    option.title.toLowerCase().includes(searchTerm.toLowerCase())
+  );
 
   const handleOpenDropdown = () => {
     setIsOpen(!isOpen);
   }
 
+  useEffect(() => {
+    searchTerm && setIsOpen(true);
+  }, [searchTerm]);
+
   return (
     <div className='dropdown'>
-      <button onClick={handleOpenDropdown}>{placeholder}</button>
+      <div
+        ref={dropdownRef}
+        onClick={handleOpenDropdown}>
+        <input
+          type="text"
+          value={searchTerm}
+          placeholder={placeholder}
+          onChange={(e) => setSearchTerm(e.target.value)}
+        />
+      </div>
       <ul className={`dropdown-menu ${isOpen? 'active' : ''}`}>
-        {data.map(({ title }, index: number) => {
-          return (
-            <li key={index}>
-              <button onClick={() => console.log('Clicked:', title)}>{title}</button>
+        {searchTerm ?
+          searched.map((option: any) => (
+            <li key={option.value}>
+              {option.title}
             </li>
-          );
-        })}
+          ))
+          :
+          data.map((option: any) => (
+            <li key={option.value}>
+              {option.title}
+            </li>
+          ))
+        }
       </ul>
     </div>
   );
