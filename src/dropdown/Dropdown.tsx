@@ -22,6 +22,7 @@ const Dropdown: FC<DropdownDataType> = ({
   const [options, setOptions] = useState<DropdownItemDataType[] | []>([]);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
+  // Filter the data based on the search term
   const searched = data.filter((option: any) =>
     option.title.toLowerCase().includes(searchTerm.toLowerCase())
   );
@@ -31,8 +32,10 @@ const Dropdown: FC<DropdownDataType> = ({
   }
 
   const handleOptionSelect = (option: DropdownItemDataType) => {
+    // Add the selected option to the selectedOptions array
     const resultOptions = [...selectedOptions, option];
     setSelectedOptions(resultOptions);
+    // Remove the selected option from the filteredOptions array
     const filteredResultOptions = removeItemsFromArrayByValue(data, resultOptions);
     setFilteredOptions(filteredResultOptions);
     setIsOpen(false);
@@ -41,6 +44,7 @@ const Dropdown: FC<DropdownDataType> = ({
     setSearchTerm('');
   }
 
+  // Remove the selected item from the selectedOptions array
   const handleRemoveItemFromSelected = (itemToRemove: DropdownItemDataType) => {
     const selectedResultOptions = selectedOptions.filter(item => item.value !== itemToRemove.value);
     setSelectedOptions(selectedResultOptions);
@@ -48,6 +52,7 @@ const Dropdown: FC<DropdownDataType> = ({
     onDropdownChange(name, selectedResultOptions);
   }
 
+  // Close the dropdown when clicking outside of it 
   useEffect(() => {
     const handleClickOutside = (event: MouseEvent) => {
       const clickedItem = event.target as HTMLElement;
@@ -68,10 +73,12 @@ const Dropdown: FC<DropdownDataType> = ({
     }
   }, [dropdownRef]);
 
+  // Open the dropdown when the search term is not empty
   useEffect(() => {
     searchTerm && setIsOpen(true);
   }, [searchTerm]);
 
+  // Test the error state
   useEffect(() => {
     if (testError) {
       setErrorState(true);
