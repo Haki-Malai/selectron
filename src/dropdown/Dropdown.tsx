@@ -7,10 +7,12 @@ import './Dropdown.scss';
 const Dropdown: FC<DropdownDataType> = ({
   data,
   placeholder,
+  error,
   name
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
+  const [errorState, setErrorState] = useState<boolean>(error)
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const searched = data.filter((option: any) =>
@@ -19,6 +21,11 @@ const Dropdown: FC<DropdownDataType> = ({
 
   const handleOpenDropdown = () => {
     setIsOpen(!isOpen);
+    if(isOpen) setErrorState(false);
+  }
+
+  const handleErrorState = () => {
+    setErrorState(!searchTerm && !isOpen);
   }
 
   useEffect(() => {
@@ -39,16 +46,20 @@ const Dropdown: FC<DropdownDataType> = ({
     return () => {
       document.removeEventListener('click', handleClickOutside);
     }
-  });
+  }, [dropdownRef]);
 
   useEffect(() => {
     searchTerm && setIsOpen(true);
   }, [searchTerm]);
 
+  useEffect(() => {
+    handleErrorState();
+  }, [isOpen]);
+
   return (
     <div className='dropdown'>
       <div
-        className={`dropdown-toggle`}
+        className={`dropdown-toggle ${errorState ? 'empty-data' : ''}`}
         ref={dropdownRef}
         onClick={handleOpenDropdown}>
         <input
@@ -57,6 +68,11 @@ const Dropdown: FC<DropdownDataType> = ({
           placeholder={placeholder}
           onChange={(e) => setSearchTerm(e.target.value)}
         />
+        {errorState &&
+          <p className={`error-label`}>
+            Required field
+          </p>
+        }
         <span className={`dropdown-toggle-arrow ${isOpen? 'active': ''}`}>
           <ArrowIcon />
         </span>

@@ -2,6 +2,7 @@ $mainBackgroundColor: #dae1ea;
 $mainTextColor: #090909;
 $mainDarkBlueColor: #122e3c;
 $placeholderColor: #66696e;
+$errorColor: #ff0002;
 $inputHeight: 40px;
 $inputWidth: 300px;
 $paddingXAxis: 10px;
@@ -34,6 +35,29 @@ $listItemsCount: 4;
 
       &::placeholder {
         color: $placeholderColor;
+      }
+    }
+    
+    &.empty-data {
+      .error-label {
+        position: absolute;
+        pointer-events: none;
+        font-size: 12px;
+        left: $paddingXAxis;
+      }
+
+      &::placeholder, .error-label {
+        color: $errorColor;
+      }
+
+      .dropdown-toggle-arrow {
+        svg path {
+          fill: $errorColor;
+        }
+      }
+
+      input {
+        box-shadow: 0 0 10px 0 rgba($errorColor, 0.15);
       }
     }
 

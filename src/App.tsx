@@ -20,7 +20,7 @@ const App: FC = () => {
 
   return (
     <div>
-      <Dropdown data={cars} placeholder='Cars' name='cars_dropdown' />
+      <Dropdown data={cars} placeholder='Cars' error={false} name='cars_dropdown' />
     </div>
   );
 }

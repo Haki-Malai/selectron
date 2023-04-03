@@ -6,5 +6,6 @@ export interface DropdownItemDataType {
 export interface DropdownDataType {
     data: DropdownItemDataType[] | [],
     placeholder: string,
+    error: boolean,
     name: string
 }
