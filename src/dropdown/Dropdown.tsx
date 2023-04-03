@@ -11,7 +11,8 @@ const Dropdown: FC<DropdownDataType> = ({
   placeholder,
   error,
   onDropdownChange,
-  name
+  name,
+  testError = false
 }) => {
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [searchTerm, setSearchTerm] = useState<string>('');
@@ -71,8 +72,12 @@ const Dropdown: FC<DropdownDataType> = ({
   }, [searchTerm]);
 
   useEffect(() => {
-    if (!isOpen) setErrorState(error);
-  }, [error]);
+    if (!error) {
+      setErrorState(true);
+      setIsOpen(false);
+      setSelectedOptions([]);
+    }
+  }, [testError]);
 
   return (
     <div className='dropdown'>

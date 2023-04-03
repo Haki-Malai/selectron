@@ -145,12 +145,12 @@ $listItemsCount: 4;
     visibility: hidden;
     overflow: auto;
     @include mainBoxStyle;
-    transition: opacity .5s ease, visibility .5s step-end;
+    transition: opacity .1s ease, visibility .1s step-end;
 
     &.active {
       opacity: 1;
       visibility: visible;
-      transition: opacity .5s ease, visibility .5s step-start;
+      transition: opacity .1s ease, visibility .1s step-start;
     }
 
     &-item {

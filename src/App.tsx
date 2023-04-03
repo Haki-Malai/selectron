@@ -31,10 +31,12 @@ const App: FC = () => {
       <Dropdown
         data={cars}
         placeholder='Cars'
-        error={error}
+        error={false}
         onDropdownChange={handleDropdownChange}
-        name='cars_dropdown'/>
-      <button onClick={() => setError(!error)}>Error Test</button>
+        name='cars_dropdown'
+        testError={error}
+      />
+      <button style={{ marginTop: '5rem'}} onClick={() => setError(!error)}>Error Test</button>
     </div>
   );
 }

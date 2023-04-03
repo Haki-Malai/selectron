@@ -8,5 +8,6 @@ export interface DropdownDataType {
     placeholder: string,
     error: boolean,
     onDropdownChange: (dropdownName: string, selectedItems: DropdownItemDataType[]) => void,
-    name: string
+    name: string,
+    testError?: boolean
 }
