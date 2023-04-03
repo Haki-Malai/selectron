@@ -1,4 +1,6 @@
 import React from 'react';
+import Dropdown from './dropdown';
+
 
 function App() {
   const cars = [
@@ -13,10 +15,8 @@ function App() {
   ];
 
   return (
-    <div className="App">
-      <header className="App-header">
-        {cars.map((car) => <h1>{car.title}</h1>)}
-      </header>
+    <div>
+        <Dropdown items={cars} />
     </div>
   );
 }
