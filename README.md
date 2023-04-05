@@ -1,7 +1,8 @@
 # selectron
 Selectron: A powerful and flexible dropdown select component for React.
 
-![node-current](https://img.shields.io/node/v/react-scripts) ![npm](https://img.shields.io/npm/v/npm)
+![node-current](https://img.shields.io/node/v/react-scripts)
+![npm](https://img.shields.io/npm/v/npm)
 
 ## Installation
 To install the project dependencies, run the following command:
@@ -25,4 +26,4 @@ npm run build
 This will create a production-ready build of the project in the build directory. You can then deploy this directory to your production server.
 
 ## License
-This project is licensed under the MIT License - see the LICENSE file for details.
+This project is licensed under the MIT License - see the [LICENSE](/LICENSE) file for details.
