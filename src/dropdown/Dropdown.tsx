@@ -80,12 +80,10 @@ const Dropdown: FC<DropdownDataType> = ({
 
   // Test the error state
   useEffect(() => {
-    if (testError) {
-      setErrorState(true);
-      setIsOpen(false);
-      setSelectedOptions([]);
-      setOptions(data);
-    }
+    setErrorState(true);
+    setIsOpen(false);
+    setSelectedOptions([]);
+    setOptions(data);
   }, [testError]);
 
   useEffect(() => {
