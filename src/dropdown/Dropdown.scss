@@ -1,0 +1,183 @@
+$mainBackgroundColor: #dae1ea;
+$mainTextColor: #090909;
+$mainDarkBlueColor: #122e3c;
+$placeholderColor: #66696e;
+$errorColor: #ff0002;
+$inputHeight: 40px;
+$inputWidth: 300px;
+$paddingXAxis: 10px;
+$listItemsCount: 4;
+
+@mixin mainBoxStyle {
+  border: 1px solid rgba(white, 0.7);
+  border-radius: 10px;
+  background-color: $mainBackgroundColor;
+  color: $mainDarkBlueColor;
+  box-shadow: 0 0 20px 0 rgba(12, 12, 12, 0.336);
+}
+
+.dropdown {
+  width: $inputWidth;
+  position: relative;
+  box-sizing: border-box;
+  margin-bottom: 1rem;
+
+  &-toggle {
+    position: relative;
+
+    input {
+      all: unset;
+      width: 100%;
+      height: $inputHeight;
+      text-indent: $paddingXAxis;
+      padding-top: 10px;
+      @include mainBoxStyle;
+
+      &::placeholder {
+        color: transparent;
+      }
+
+      &:focus ~ .label {
+        transform: translateY(-130%) scale(0.7);
+        opacity: 0.6;
+      }
+    }
+
+    .label {
+      pointer-events: none;
+      color: $mainDarkBlueColor;
+      position: absolute;
+      left: $paddingXAxis;
+      top: 50%;
+      transform: translateY(-50%);
+      transform-origin: left center;
+      margin: 0;
+      transition: transform 0.3s ease;
+      will-change: transform;
+
+      &.active {
+        transform: translateY(-130%) scale(0.7);
+        opacity: 0.6;
+      }
+    }
+
+    &.empty-data {
+      .error-label {
+        position: absolute;
+        pointer-events: none;
+        font-size: 12px;
+        left: $paddingXAxis;
+      }
+
+      .label, .error-label {
+        color: $errorColor;
+      }
+
+      .dropdown-toggle-arrow {
+        svg path {
+          fill: $errorColor;
+        }
+      }
+
+      input {
+        box-shadow: 0 0 20px 0 rgba($errorColor, 0.3);
+      }
+    }
+
+    &-arrow {
+      position: absolute;
+      display: flex;
+      top: 50%;
+      right: $paddingXAxis;
+      pointer-events: none;
+      transform: translateY(-50%);
+      transition: transform .5s ease;
+
+      &.active {
+        transform: translateY(-50%) rotateX(180deg);
+      }
+
+      svg {
+        width: 15px;
+        height: 20px;
+      }
+    }
+  }
+
+  &-selected-items {
+    display: flex;
+    flex-wrap: wrap;
+    margin-top: 5px;
+
+    &-item {
+      font-size: 13px;
+      margin-right: 5px;
+      margin-bottom: 5px;
+      background-color: $mainDarkBlueColor;
+      color: white;
+      padding: 4px 7px;
+      border-radius: 5px;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+
+      &:hover {
+        background-color: lighten($mainDarkBlueColor, 5%);
+      }
+
+      svg {
+        margin-left: 5px;
+        width: 7px;
+        height: 7px;
+      }
+    }
+  }
+
+  &-menu {
+    position: absolute;
+    z-index: 1;
+    top: calc(#{$inputHeight} * 1.2);
+    max-height: calc(#{$listItemsCount * $inputHeight});
+    width: 100%;
+    margin: 16px 0 0;
+    padding: 0;
+    opacity: 0;
+    visibility: hidden;
+    overflow: auto;
+    @include mainBoxStyle;
+    transition: opacity .1s ease, visibility .1s step-end;
+
+    &.active {
+      opacity: 1;
+      visibility: visible;
+      transition: opacity .1s ease, visibility .1s step-start;
+    }
+
+    &-item {
+      padding: 0 $paddingXAxis;
+      height: $inputHeight;
+      display: flex;
+      align-items: center;
+      cursor: pointer;
+      transition: background-color .2s ease, color .2s ease;
+
+      &:hover, &.selected {
+        background-color: $mainDarkBlueColor;
+        color: white;
+      }
+    }
+
+    .no-data {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+      padding: 40px 20px;
+
+      svg {
+        width: 50px;
+        height: 50px;
+      }
+    }
+  }
+}
