@@ -1,6 +1,7 @@
 # selectron
-Selectron: A powerful and flexible dropdown select component for React.
+Selectron: A powerful and flexible dropdown select component for React. Free demo on [Netlify](https://selectr0n.netlify.app/)
 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/09df90bb-7b11-41b5-ab54-e5159da01bb9/deploy-status)](https://selectr0n.netlify.app/)
 ![node-current](https://img.shields.io/node/v/react-scripts)
 ![npm](https://img.shields.io/npm/v/npm)
 
